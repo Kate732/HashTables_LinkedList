@@ -11,7 +11,7 @@ namespace HashTable
             string[] allLines = File.ReadAllLines(pathToFile);
             StringsDictionary dict = SortDict(allLines);
             InteractionWithDict(dict);
-            Console.WriteLine();
+            Console.WriteLine(dict.collision);
         }
 
         private static void InteractionWithDict(StringsDictionary dict)
