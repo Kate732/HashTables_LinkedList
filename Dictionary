@@ -9,6 +9,8 @@ namespace HashTable
         
         private int _newSize = InitialSize;
         private int _notEmpty;
+        public int collision = 0;
+        private double MaxLoadFactor = 0.8;
 
         private LinkedList[] _buckets = new LinkedList[InitialSize];
         
@@ -22,6 +24,7 @@ namespace HashTable
                 _buckets[hash] = new LinkedList();
                 _notEmpty += 1;
             }
+            collision += 1;
             _buckets[hash].Add(pair);
             CheckHashTableLoaded();
         }
@@ -29,7 +32,7 @@ namespace HashTable
         private void CheckHashTableLoaded()
         {
             double loadFactor = CountLoadFactor();
-            if (loadFactor > 0.8)
+            if (loadFactor > MaxLoadFactor)
             {
                 Console.WriteLine($"loadFactor: {loadFactor}");
                 ExtendBuckets();
@@ -43,7 +46,7 @@ namespace HashTable
         private void ExtendBuckets()
         {
             _notEmpty = 0;
-            _newSize *= 10;
+            _newSize = _newSize * 2 - 1;
             Console.WriteLine($"newSize: {_newSize}");
             List<LinkedListNode> allPairs = GetAllPairs();
             _buckets = new LinkedList[_newSize];
